@@ -232,6 +232,6 @@ shinyServer(function(input,output,session){
 		pwr <- setPwr()
 		out <- getPwr()
 		# list(d=d,n=n,pwr=pwrp,ncp=ncp)
-		paste("<br>POWER = ",round(out$pwr,3),"<br><br>df = ",out$df,"<br><br>NCP = ",out$ncp,"<br>Cohen d = ",out$d,"<br>total n = ",out$df+2)
+		paste("<br>POWER = ",round(out$pwr,3),"<br><br>df = ",out$df,"<br><br>NCP = ",out$ncp,"<br>Cohen d = ",out$d,"<br>total n = ",out$n)
 	})
 })
