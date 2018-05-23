@@ -54,12 +54,12 @@ shinyServer(function(input,output,session){
 	
 		inc <- setDta()
 		pwr <- setPwr()
-		# effect size is difference on average standard deviation
-		d <- 2*(inc$sMuB-inc$sMuA)/(inc$sSdA+inc$sSdB) 
-		# degrees of freedom is Welch corrected combination of variances
-		df <- ((inc$sSdA^2/inc$sNrA) + (inc$sSdB^2/inc$sNrB))^2 / ((inc$sSdA^4/(inc$sNrA^2*(inc$sNrA-1))) + (inc$sSdB^4/(inc$sNrB^2*(inc$sNrB-1)))) 
 		# total number
 		n <- (inc$sNrA + inc$sNrB) #*(inc$sSdA^4+inc$sSdA^4)/(inc$sSdB^2+inc$sSdB^2)^2
+		# effect size is difference on average standard deviation
+		d <- (inc$sMuB-inc$sMuA)/sqrt((inc$sNrA/n)*inc$sSdA^2+(inc$sNrB/n)*inc$sSdB^2) 
+		# degrees of freedom is Welch corrected combination of variances
+		df <- ((inc$sSdA^2/inc$sNrA) + (inc$sSdB^2/inc$sNrB))^2 / ((inc$sSdA^4/(inc$sNrA^2*(inc$sNrA-1))) + (inc$sSdB^4/(inc$sNrB^2*(inc$sNrB-1)))) 
 		# power for effect size, sample size (df+2), alpha
 		pwrp <- pwr.t.test(d=d,n=round((df+2)/2),sig.level=pwr$sT1a,type="two.sample",alternative="greater")$power
 		# non-centrality parameter as effect size times sample size (corrected for inequality)
