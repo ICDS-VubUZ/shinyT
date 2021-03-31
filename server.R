@@ -2,7 +2,7 @@
 # install required packages not yet installed
 pckgs <- c('shiny','reshape2','ggplot2','plyr','arm')
 todo <- pckgs[!is.element(pckgs, names(installed.packages()[,"Package"]))]
-if(length(todo) > 0) install.packages(todo)  #,repos="http://cran.us.r-project.org")
+# if(length(todo) > 0) install.packages(todo)  #,repos="http://cran.us.r-project.org")
 
 # load in the packages
 library(shiny)
@@ -84,7 +84,7 @@ shinyServer(function(input,output,session){
 
 		inc <- setDta()
 		xvalues <- data.frame(x=c(-3*max(inc$sSdA,inc$sSdB)-min(inc$sMuA,inc$sMuB),3*max(inc$sSdA,inc$sSdB)+max(inc$sMuA,inc$sMuB)))
-		pNorm <- ggplot(xvalues,aes(x=xvalues))
+		pNorm <- ggplot(xvalues,aes(x=x))#values))
 		pn1 <- function(x){
 			dnorm(x,mean=inc$sMuA,sd=inc$sSdA)
 		}
@@ -122,7 +122,7 @@ shinyServer(function(input,output,session){
 			out[x >= qnorm(1-pwr$sT1a,mean=inc$sMuB - inc$sMuA,sd=se)] <- NA
 			return(out)
 		}
-		pDiff <- ggplot(xvalues,aes(x=xvalues))
+		pDiff <- ggplot(xvalues,aes(x=x))#values))
 		pDiff <- pDiff + 
 			scale_x_continuous(labels=floor(xvalues[[1]][1]):ceiling(xvalues[[1]][2]),breaks=floor(xvalues[[1]][1]):ceiling(xvalues[[1]][2])) +
 			stat_function(fun=pn1,colour="red") + 
@@ -157,7 +157,7 @@ shinyServer(function(input,output,session){
 			out[x >= qnorm(1-pwr$sT1a,mean=ncp$ncp,sd=se)] <- NA
 			return(out)
 		}
-		pNcp <- ggplot(xvalues,aes(x=xvalues))
+		pNcp <- ggplot(xvalues,aes(x=x)) #values))
 		pNcp <- pNcp + 
 			scale_x_continuous(labels=floor(xvalues[[1]][1]):ceiling(xvalues[[1]][2]),breaks=floor(xvalues[[1]][1]):ceiling(xvalues[[1]][2])) +
 			stat_function(fun=pn1,colour="red") + 
